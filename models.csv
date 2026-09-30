@@ -1,0 +1,9 @@
+model_name,reasoning_level_name,model_slug,reasoning_level
+GPT-6 Astra,Low,gpt-6-astra,low
+GPT-6 Sol,Medium,gpt-6-sol,medium
+GPT-6 Astra,Medium,gpt-6-astra,medium
+GPT-6 Luna,High,gpt-6-luna,high
+GPT-6 Sol,High,gpt-6-sol,high
+GPT-6 Astra,High,gpt-6-astra,high
+GPT-6 Sol,XHigh,gpt-6-sol,xhigh
+GPT-6 Astra,XHigh,gpt-6-astra,xhigh
