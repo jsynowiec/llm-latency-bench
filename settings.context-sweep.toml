@@ -1,0 +1,50 @@
+# Context sweep from 2k to 128k tokens. Single-turn only, so no request reads a cached prefix.
+# Use with `--settings settings.context-sweep.toml`.
+
+[client]
+connect_timeout_s = 10.0
+# Longest silence allowed between stream chunks. High reasoning effort can delay the first chunk.
+read_timeout_s = 600.0
+# Time limit for one whole request.
+request_timeout_s = 900.0
+# Keep idle connections open so most requests reuse a warm connection.
+keepalive_expiry_s = 120.0
+
+[retries]
+# Retries per turn. The SDK does not retry, so every attempt is timed and recorded.
+max_retries = 2
+backoff_base_s = 2.0
+backoff_max_s = 30.0
+
+[run]
+repetitions = 5
+seed = 20260930
+# Scenarios that run at the same time. Turns in a scenario always run in order.
+concurrency = 2
+warmup = true
+
+[output]
+# The prompt asks for an answer of at most this many words.
+answer_words = 80
+# Sent as `max_tokens`. It includes hidden reasoning tokens, so it is far above the answer size.
+max_tokens = 32000
+
+[sizes]
+# Approximate token targets, at 4 characters per token. raw.csv records the real counts.
+turn_counts = [1]
+
+[sizes.prompt_tokens]
+short = 40
+medium = 400
+long = 2000
+
+[sizes.context_tokens]
+# Labels state their size. Prompt sizes match `settings.toml`.
+2k = 2000
+16k = 16000
+128k = 128000
+
+[stats]
+# Below these sample counts, aggregated.csv flags p95 and p99 as low confidence.
+min_samples_p95 = 20
+min_samples_p99 = 100
